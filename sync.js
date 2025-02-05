@@ -31,8 +31,7 @@ const server = http.createServer((req, res) => {
     sendResponse(res, 404, { error: 'Route Not Found' });
   }
 });
-
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+server.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}/posts`));
 
 // Helper to read data from the JSON file
 function readData() {
@@ -54,7 +53,7 @@ function handleReadData(res) {
 // Handle POST request
 function handleCreatePost(res, body) {
   const data = readData();
-  const newPost = { id: data.length + 1, ...JSON.parse(body) };
+  const newPost = { id: data[data.length-1].id+ 1, ...JSON.parse(body) };
   data.push(newPost);
   writeData(data);
   sendResponse(res, 201, newPost);

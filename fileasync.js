@@ -36,7 +36,8 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+server.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}/posts`));
+
 
 // Helper to read data from the JSON file
 async function readData() {
@@ -58,7 +59,7 @@ async function handleReadData(res) {
 // Handle POST request
 async function handleCreatePost(res, body) {
   const data = await readData();
-  const newPost = { id: data.length + 1, ...JSON.parse(body) };
+  const newPost = { id: data[data.length-1].id+ 1, ...JSON.parse(body) };
   data.push(newPost);
   await writeData(data);
   sendResponse(res, 201, newPost);
